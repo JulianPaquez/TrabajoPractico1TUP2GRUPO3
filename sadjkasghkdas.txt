@@ -1,0 +1,93 @@
+Proceso TrabajoPractico
+	Definir n,i,j,articulos,codigoIngresado,codigo,CantExist,cantVendida,stockActual,rubro,codigoArticulo,Quincena1,Quincena2,opcion como entero;
+	definir descripcion como cadena;
+	definir PrecioVenta,Totalventa Como Real;
+	definir valido Como Logico;
+	
+	escribir "Ingresar el numero de articulos";
+	leer n;
+	Dimension articulos[n];
+	Dimension codigo[3,5];
+	dimension cantVendida[1,2];
+	
+	
+	Para i <- 1 Hasta n Con Paso 1 Hacer
+		
+		Repetir
+			escribir "ingrese el rubro";
+			leer rubro;
+			escribir "ingrese el codigo de articulo";
+			leer codigoArticulo;
+			valido=ValidarCodigo(rubro,codigoArticulo);
+		Hasta Que valido = verdadero
+		
+		
+		escribir "ingrese la descripcion del articulo";
+		leer descripcion;
+		
+		escribir "ingrese el precio de venta del articulo";
+		leer PrecioVenta;
+		
+		escribir "ingrese la cantidad existente de los articulos";
+		leer CantExist;
+		
+		escribir "ingrese la cantidad de articulos vendidos en la quincena 1:";
+		leer Quincena1;
+		escribir "ingrese la cantidad de articulos vendidos en la quincena 2:";
+		leer Quincena2;
+		
+		finPara
+	
+		
+		
+		escribir "ingrese una opcion:";
+		leer opcion;
+		
+		Segun opcion Hacer
+			1:
+				escribir "1. Mostrar lista de artículos ordenada por descripción"; 
+
+			2:
+				escribir "2. Mostrar lista de artículos ordenada por cantidad vendida ";
+
+			3:
+				escribir "3. Mostrar stock actual de artículos";
+				
+			4:
+				escribir "4. Buscar artículo por código";
+				
+			5:
+				escribir "5. Mostrar estadísticas";
+				
+			6:
+				escribir "6. Salir";
+
+		FinSegun
+		
+	
+FinProceso
+
+Funcion valido <- ValidarCodigo(rubro Por Referencia,codigoArticulo)
+	definir valido Como Logico;
+	definir i,n como entero;
+	
+		Si rubro <> 100 | rubro<>300 | rubro <> 450 | rubro <> 680 | rubro <> 720    Entonces
+			valido=falso;
+			escribir "rubro incorrecto.Ingrese nuevamente un rubro ";
+		SiNo
+			valido=verdadero;
+			
+		FinSi
+	
+	
+		Si codigoArticulo>9999 | codigoArticulo<100000 Entonces
+			valido=verdadero;
+		SiNo
+			valido=falso;
+			escribir "codigo incorrecto.El codigo no debe superar los 5 digitos";
+		FinSi
+	
+	
+FinFuncion
+
+
