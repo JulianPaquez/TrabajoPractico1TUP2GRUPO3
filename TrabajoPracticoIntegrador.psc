@@ -1,6 +1,6 @@
 Algoritmo TrabajoPracticoIntegrador
 	
-	Definir opciones,codigo,i,mes,rubro Como Entero;
+	Definir opciones,codigo,i,mes,rubro,cantidadTotalvendidames,importeTotalVenta Como Entero;
 	Definir n,articulos,codigoIngresado,CantExist,Quincena1,Quincena2,CantVendidaXMes,stockActual como entero;	
 	definir PrecioVenta,Totalventa Como Real;
 	definir valido,validoRub Como Logico;
@@ -17,6 +17,8 @@ Algoritmo TrabajoPracticoIntegrador
 	Dimension CantExist[n];
 	Dimension Quincena1[n];
 	Dimension Quincena2[n];
+	Dimension cantidadTotalvendidames[n];
+	dimension importeTotalVenta[n];
 	//Dimension mes[3]; no entra el mes;
 	
 	
@@ -52,6 +54,9 @@ Algoritmo TrabajoPracticoIntegrador
 		leer Quincena1[i];
 		escribir "Cantidad de articulos vendidos en la quincena 2";
 		leer Quincena2[i];
+		
+		cantidadTotalvendidames[i] = Quincena1[i] + Quincena2[i];
+		importeTotalVenta[i] = cantidadTotalvendidames[i] * precioVenta[i];
 		//        FinPara
     FinPara
 	
@@ -75,6 +80,7 @@ Algoritmo TrabajoPracticoIntegrador
 				ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta);
 			2:
 				Escribir "Lista de articulos ordenada por cantidad vendida: ";
+				OrdenadaPorCantVendida(CodigoIngresado,n,descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta) ;
 				//HACER FUNCION
 				//ListaDeArticulosOrdenadaPorCantVendida();
 			3:
@@ -148,9 +154,9 @@ FinSubProceso
 subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 	definir i,j,pos_menor,aux como entero;
 	
-	Para i <- 0 Hasta n - 2 Hacer
+	Para i <- 0 Hasta n - 2 Con Paso 1 Hacer
 		pos_menor <-i;
-				Para j <- i+1 Hasta n - 1 Hacer
+				Para j <- i+1 Hasta n - 1 Con Paso 1 Hacer
 					Si descripcion[j] > descripcion[pos_menor] Entonces
 							// Intercambiar los valores
 							aux = descripcion[j];
@@ -169,21 +175,102 @@ subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 		FinPara
 		//		
 			Escribir "Productos ordenados:";
-			Para i = 0 Hasta n-1 Hacer
+			Para i = 0 Hasta n-1 Con Paso 1 Hacer
 				Escribir "Código:", codigoIngresado[i];
-				Escribir "descripcion ",descripcion[i];
+				Escribir "descripcion: ",descripcion[i];
 				Escribir "Precio de Venta:", precioVenta[i];
 			FinPara
 			
 	
 FinSubProceso
 
-SubProceso OrdenadaPorCantVendida(Codigo, Descripcion , CantidadTotalvendidames ,ImporteTotalventa) 
-
+SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta) 
+	definir i,j,pos_mayor,aux como entero;
+	definir aux2 como cadena;
+	Para i <- 0 Hasta n - 2 Hacer
+		pos_mayor <-i;
+		Para j <- i+1 Hasta n - 1 Con Paso 1 Hacer
+			Si cantidadTotalvendidames[j] > cantidadTotalvendidames[pos_mayor] Entonces
+				pos_mayor <- j;
+			FinSi
+		FinPara
+		
+			
+				// Intercambiar los valores
+			  aux <- cantidadTotalvendidames[i];
+		      cantidadTotalvendidames[i] <- cantidadTotalvendidames[pos_mayor];
+		      cantidadTotalvendidames[pos_mayor] <- aux;
+			
+		       aux <- codigoIngresado[i];
+		       codigoIngresado[i] <- codigoIngresado[pos_mayor];
+		       codigoIngresado[pos_mayor] <- aux;
+			
+		       aux <- importeTotalVenta[i];
+		       importeTotalVenta[i] <- importeTotalVenta[pos_mayor];
+		       importeTotalVenta[pos_mayor] <- aux;
+			
+		       aux <- precioVenta[i];
+		       precioVenta[i] <- precioVenta[pos_mayor];
+		       precioVenta[pos_mayor] <- aux;
+			   
+			   aux2 <- descripcion[i];
+			   descripcion[i] <- descripcion[pos_mayor];
+		       descripcion[pos_mayor] <- aux2;
+				
+			
+	FinPara
+	//		
+	Escribir "Productos ordenados:";
+	Para i <- 0 Hasta n-1 con paso 1 Hacer
+		Escribir "Código:", codigoIngresado[i];
+		escribir " Descripcion :",descripcion[i];
+		Escribir "Cantidad Total vendida en el mes:", cantidadTotalvendidames[i];
+		Escribir "Precio de Venta:", importeTotalVenta[i];
+		
+	FinPara
+	
+	
 
 FinSubProceso
 
 
+//SubProceso OrdenadaPorCantVendida(CodigoIngresado, n, descripcion, cantidadTotalvendidames, ImporteTotalventa, precioVenta)
+//    Definir i, j, pos_mayor, aux como entero
+//    Para i <- 0 Hasta n - 2 Hacer
+//        pos_mayor <- i
+//        Para j <- i + 1 Hasta n - 1 Con Paso 1 Hacer
+//            Si cantidadTotalvendidames[j] > cantidadTotalvendidames[pos_mayor] Entonces
+//                pos_mayor <- j
+//            FinSi
+//        FinPara
+//		
+//        // Intercambiar los valores de los productos
+//        aux <- cantidadTotalvendidames[i]
+//        cantidadTotalvendidames[i] <- cantidadTotalvendidames[pos_mayor]
+//        cantidadTotalvendidames[pos_mayor] <- aux
+//		
+//        aux <- codigoIngresado[i]
+//        codigoIngresado[i] <- codigoIngresado[pos_mayor]
+//        codigoIngresado[pos_mayor] <- aux
+//		
+//        aux <- importeTotalVenta[i]
+//        importeTotalVenta[i] <- importeTotalVenta[pos_mayor]
+//        importeTotalVenta[pos_mayor] <- aux
+//		
+//        aux <- precioVenta[i]
+//        precioVenta[i] <- precioVenta[pos_mayor]
+//        precioVenta[pos_mayor] <- aux
+//    FinPara
+//	
+//    // Mostrar productos ordenados en forma descendente
+//    Escribir "Productos ordenados:"
+//    Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
+//        Escribir "Código:", codigoIngresado[i]
+//        Escribir "Descripción:", descripcion[i]
+//        Escribir "Cantidad Total vendida en el mes:", cantidadTotalvendidames[i]
+//        Escribir "Precio de Venta:", importeTotalVenta[i]
+//    FinPara
+//FinSubProceso
 
 
 
