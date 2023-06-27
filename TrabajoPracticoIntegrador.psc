@@ -1,7 +1,7 @@
 Algoritmo TrabajoPracticoIntegrador
 	
-	Definir opciones,codigo,i,mes,rubro,cantidadTotalvendidames,importeTotalVenta Como Entero;
-	Definir n,articulos,codigoIngresado,CantExist,Quincena1,Quincena2,CantVendidaXMes,stockActual como entero;	
+	Definir opciones,codigo,i,mes,rubro,cantidadTotalvendidames,importeTotalVenta,contVentasMes,stock Como Entero;
+	Definir n,articulos,codigoIngresado,CantExist,Quincena1,Quincena2,CantVendidaXMes como entero;	
 	definir PrecioVenta,Totalventa Como Real;
 	definir valido,validoRub Como Logico;
 	definir descripcion como cadena;
@@ -19,6 +19,7 @@ Algoritmo TrabajoPracticoIntegrador
 	Dimension Quincena2[n];
 	Dimension cantidadTotalvendidames[n];
 	dimension importeTotalVenta[n];
+	dimension stock[n];
 	//Dimension mes[3]; no entra el mes;
 	
 	
@@ -57,6 +58,8 @@ Algoritmo TrabajoPracticoIntegrador
 		
 		cantidadTotalvendidames[i] = Quincena1[i] + Quincena2[i];
 		importeTotalVenta[i] = cantidadTotalvendidames[i] * precioVenta[i];
+		contVentasMes = contVentasMes + importeTotalVenta[i];
+		stock[i] = CantExist[i] - (Quincena1[i] + Quincena2[i]);
 		//        FinPara
     FinPara
 	
@@ -81,12 +84,11 @@ Algoritmo TrabajoPracticoIntegrador
 			2:
 				Escribir "Lista de articulos ordenada por cantidad vendida: ";
 				OrdenadaPorCantVendida(CodigoIngresado,n,descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta) ;
-				//HACER FUNCION
-				//ListaDeArticulosOrdenadaPorCantVendida();
+				
 			3:
 				Escribir "Stock actual de los articulos";
-				//HACER FUNCION
-				//StockActual();
+				StockActual(codigoIngresado,n,descripcion, stock);
+				
 			4:
 				Escribir "Buscar articulo por codigo.";
 				//HACER FUNCION
@@ -227,50 +229,28 @@ SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotal
 		Escribir "Cantidad Total vendida en el mes:", cantidadTotalvendidames[i];
 		Escribir "Precio de Venta:", importeTotalVenta[i];
 		
+		escribir " El monto total de ventas realizada en el mes es: ", contVentasMes;
+		
 	FinPara
 	
 	
 
 FinSubProceso
 
+SubProceso StockActual ( codigoIngresado,n, descripcion, stock)
+	definir i como entero;
+	Para i <- 0 Hasta n-1 Con Paso 1 Hacer
+		Escribir "Código:", codigoIngresado[i];
+		escribir " Descripcion :",descripcion[i];
+		escribir " Stock actual: ", stock[i];
+	FinPara
+	
+FinSubProceso
 
-//SubProceso OrdenadaPorCantVendida(CodigoIngresado, n, descripcion, cantidadTotalvendidames, ImporteTotalventa, precioVenta)
-//    Definir i, j, pos_mayor, aux como entero
-//    Para i <- 0 Hasta n - 2 Hacer
-//        pos_mayor <- i
-//        Para j <- i + 1 Hasta n - 1 Con Paso 1 Hacer
-//            Si cantidadTotalvendidames[j] > cantidadTotalvendidames[pos_mayor] Entonces
-//                pos_mayor <- j
-//            FinSi
-//        FinPara
-//		
-//        // Intercambiar los valores de los productos
-//        aux <- cantidadTotalvendidames[i]
-//        cantidadTotalvendidames[i] <- cantidadTotalvendidames[pos_mayor]
-//        cantidadTotalvendidames[pos_mayor] <- aux
-//		
-//        aux <- codigoIngresado[i]
-//        codigoIngresado[i] <- codigoIngresado[pos_mayor]
-//        codigoIngresado[pos_mayor] <- aux
-//		
-//        aux <- importeTotalVenta[i]
-//        importeTotalVenta[i] <- importeTotalVenta[pos_mayor]
-//        importeTotalVenta[pos_mayor] <- aux
-//		
-//        aux <- precioVenta[i]
-//        precioVenta[i] <- precioVenta[pos_mayor]
-//        precioVenta[pos_mayor] <- aux
-//    FinPara
-//	
-//    // Mostrar productos ordenados en forma descendente
-//    Escribir "Productos ordenados:"
-//    Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
-//        Escribir "Código:", codigoIngresado[i]
-//        Escribir "Descripción:", descripcion[i]
-//        Escribir "Cantidad Total vendida en el mes:", cantidadTotalvendidames[i]
-//        Escribir "Precio de Venta:", importeTotalVenta[i]
-//    FinPara
-//FinSubProceso
+subproceso 
+
+
+
 
 
 
