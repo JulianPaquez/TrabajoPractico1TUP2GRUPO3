@@ -262,24 +262,66 @@ SubProceso encontrado <- BuscarArticuloPorCodigo(CodigoIngresado,codigoComp,n,de
             
 			
         SiNo
+			//si codigoComp <> CodigoIngresado[i] entonces
 			encontrado = falso;
-            escribir "No existe artículo con ese código";
+				escribir "No existe artículo con ese código";
+				
+			//FinSi
+			
 		    
         FinSi
     FinPara
 FinFuncion
 
+SubProceso MostrarEstadisticas(n, codigoIngresado,rubro, descripcion, cantidadTotalvendidames, importeTotalVenta)
+	definir i,totalrubro, totalRubroQ1, totalRubroQ2 como entero;
+	definir porcentajeRubro,porcentajeQuincenaQ1,porcentajeQuincenaQ2 como real;
+	dimension totalrubro[5];
+	Dimension porcentajeRubro[5];
+	Dimension totalRubroQ1[5];
+    Dimension totalRubroQ2[5];
+	Dimension porcentajeQuincenaQ1[5];
+    Dimension porcentajeQuincenaQ2[5];
+	Para i <-0 Hasta n-1 Con Paso 1 Hacer
+		rubro[i] = codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
+		
+		totalrubro[i] = totalrubro[i] + cantidadTotalvendidames[i];
+	FinPara
+	
+	Para i <-0 Hasta 4 Con Paso 1 Hacer
+		porcentajeRubro[i] = (totalRubro[i] / contVentasMes) *100;
+		escribir "Porcentaje de artículos vendidos en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeRubro[i], "%";
+	FinPara
+	
+	Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
+		rubro[i] = codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
+				
+		Si i < n/2 entonces
+	     totalRubroQ1[rubro] <- totalRubroQ1[rubro] + cantidadTotalvendidames[i];
+		SiNo
+		totalRubroQ2[rubro] <- totalRubroQ2[rubro] + cantidadTotalvendidames[i];
+		FinSi
+	FinPara
+	
+	Para i <- 0 Hasta 4 Con Paso 1 Hacer
+	   porcentajeQuincenaQ1[i] <- (totalRubroQ1[i] / totalVentas) * 100;
+	   porcentajeQuincenaQ2[i] <- (totalRubroQ2[i] / totalVentas) * 100;
+	    escribir "Porcentaje de venta de la quincena 1 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ1[i], "%";
+		escribir "Porcentaje de venta de la quincena 2 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ2[i], "%";
+	FinPara
+FinSubProceso
+
 //SubProceso MostrarEstadisticas(n, codigoIngresado, descripcion, cantidadTotalvendidames, importeTotalVenta)
-//    definir i, rubro, totalVentas, totalRubro, rubroMaxVentasQ1, rubroMaxVentasQ2 como entero;
-//    definir porcentajeRubro, porcentajeQuincenaQ1, porcentajeQuincenaQ2 como real;
+//   definir i, rubro, totalVentas, totalRubro, rubroMaxVentasQ1, rubroMaxVentasQ2 como entero;
+//   definir porcentajeRubro, porcentajeQuincenaQ1, porcentajeQuincenaQ2 como real;
 //	
-//    escribir "Mostrando estadísticas...";
+//   escribir "Mostrando estadísticas...";
 //	
-//    // Calcular porcentaje de la cantidad de artículos vendidos por rubro
+// Calcular porcentaje de la cantidad de artículos vendidos por rubro
 //    Dimension totalRubro[5];
-//    Dimension porcentajeRubro[5];
-//	
-//    Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
+//   Dimension porcentajeRubro[5];
+//
+//   Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
 //        rubro <- codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
 //		
 //        totalRubro[rubro] <- totalRubro[rubro] + cantidadTotalvendidames[i];
@@ -287,18 +329,18 @@ FinFuncion
 //	
 //    totalVentas <- sumarElementosArray(cantidadTotalvendidames, n);
 //	Para i <- 0 Hasta 4 Con Paso 1 Hacer
-//        porcentajeRubro[i] <- (totalRubro[i] / totalVentas) * 100;
+//       porcentajeRubro[i] <- (totalRubro[i] / totalVentas) * 100;
 //        escribir "Porcentaje de artículos vendidos en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeRubro[i], "%";
 //    FinPara
 //	
 //    // Calcular porcentaje de venta de cada quincena por rubro sobre el total del mes
 //    Dimension totalRubroQ1[5];
-//    Dimension totalRubroQ2[5];
-//    Dimension porcentajeQuincenaQ1[5];
-//    Dimension porcentajeQuincenaQ2[5];
+//   Dimension totalRubroQ2[5];
+//   Dimension porcentajeQuincenaQ1[5];
+//   Dimension porcentajeQuincenaQ2[5];
 //	
-//    Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
-//        rubro <- codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
+//   Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
+//       rubro <- codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
 //		
 //        Si i < n/2 entonces
 //            totalRubroQ1[rubro] <- totalRubroQ1[rubro] + cantidadTotalvendidames[i];
@@ -308,13 +350,13 @@ FinFuncion
 //    FinPara
 //	
 //    Para i <- 0 Hasta 4 Con Paso 1 Hacer
-//        porcentajeQuincenaQ1[i] <- (totalRubroQ1[i] / totalVentas) * 100;
+//       porcentajeQuincenaQ1[i] <- (totalRubroQ1[i] / totalVentas) * 100;
 //        porcentajeQuincenaQ2[i] <- (totalRubroQ2[i] / totalVentas) * 100;
 //        escribir "Porcentaje de venta de la quincena 1 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ1[i], "%";
-//        escribir "Porcentaje de venta de la quincena 2 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ2[i], "%";
+//       escribir "Porcentaje de venta de la quincena 2 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ2[i], "%";
 //    FinPara
-//	
-//    // Calcular rubro con el mayor importe total de ventas en cada quincena
+//
+//   // Calcular rubro con el mayor importe total de ventas en cada quincena
 //    rubroMaxVentasQ1 <- obtenerRubroMaxVentas(totalRubroQ1);
 //    rubroMaxVentasQ2 <- obtenerRubroMaxVentas(totalRubroQ2);
 //	
