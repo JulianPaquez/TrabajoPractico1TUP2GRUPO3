@@ -1,12 +1,12 @@
 Algoritmo TrabajoPracticoIntegrador
 	
-	Definir opciones,codigo,i,mes,rubro,cantidadTotalvendidames,importeTotalVenta,contVentasMes,stock Como Entero;
+	Definir opciones,codigo,i,mes,rubro,cantidadTotalvendidames,importeTotalVenta,contVentasMes,stock,codigoComp Como Entero;
 	Definir n,articulos,codigoIngresado,CantExist,Quincena1,Quincena2,CantVendidaXMes como entero;	
 	definir PrecioVenta,Totalventa Como Real;
-	definir valido,validoRub Como Logico;
+	definir valido,validoRub,encontrado Como Logico;
 	definir descripcion como cadena;
 	
-	
+	contVentasMes =0;
 	
 	escribir "Ingresar el numero de articulos";
 	leer n;
@@ -83,7 +83,7 @@ Algoritmo TrabajoPracticoIntegrador
 				ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta);
 			2:
 				Escribir "Lista de articulos ordenada por cantidad vendida: ";
-				OrdenadaPorCantVendida(CodigoIngresado,n,descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta) ;
+				OrdenadaPorCantVendida(CodigoIngresado,n,descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta,contVentasMes) ;
 				
 			3:
 				Escribir "Stock actual de los articulos";
@@ -91,8 +91,11 @@ Algoritmo TrabajoPracticoIntegrador
 				
 			4:
 				Escribir "Buscar articulo por codigo.";
-				//HACER FUNCION
-				//BuscarArticuloPorCodigo();
+				Repetir
+					leer codigoComp;
+					encontrado <- BuscarArticuloPorCodigo(CodigoIngresado,codigoComp,n,descripcion,Quincena1,Quincena2,stock,importeTotalVenta);
+				Hasta Que encontrado = verdadero;
+					       
 			5:
 				Escribir "Mostrando estadisticas...";
 				//HACER FUNCION
@@ -186,7 +189,7 @@ subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 	
 FinSubProceso
 
-SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta) 
+SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta,contVentasMes) 
 	definir i,j,pos_mayor,aux como entero;
 	definir aux2 como cadena;
 	Para i <- 0 Hasta n - 2 Hacer
@@ -247,7 +250,32 @@ SubProceso StockActual ( codigoIngresado,n, descripcion, stock)
 	
 FinSubProceso
 
-subproceso 
+SubProceso encontrado <- BuscarArticuloPorCodigo(CodigoIngresado,codigoComp,n,descripcion,Quincena1,Quincena2,stock,importeTotalVenta)
+    definir i  Como Entero;
+	definir encontrado como logico;
+	
+	encontrado = falso;
+    Para i<-0 Hasta n-1 Con Paso 1 Hacer
+        Si codigoComp=CodigoIngresado[i] Entonces
+			encontrado = verdadero;
+            escribir " Descripcion :",descripcion[i];
+            escribir " Stock actual: ", stock[i];
+            escribir "Cantidad vendida en la quincena 1:  ", Quincena1[i];
+            escribir "Cantidad vendida en la quincena 1:  ", Quincena2[i];
+            
+			
+        SiNo
+			encontrado = falso;
+            escribir "No existe artículo con ese código";
+		    
+        FinSi
+    FinPara
+FinFuncion
+
+
+
+
+
 
 
 
