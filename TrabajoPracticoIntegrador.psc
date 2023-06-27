@@ -1,6 +1,6 @@
 Algoritmo TrabajoPracticoIntegrador
 	
-	Definir opciones,codigo,i,mes Como Entero;
+	Definir opciones,codigo,i,mes,rubro Como Entero;
 	Definir n,articulos,codigoIngresado,CantExist,Quincena1,Quincena2,CantVendidaXMes,stockActual como entero;	
 	definir PrecioVenta,Totalventa Como Real;
 	definir valido,validoRub Como Logico;
@@ -72,7 +72,7 @@ Algoritmo TrabajoPracticoIntegrador
 		Segun opciones Hacer
 			1:
 				escribir "Lista de articulos ordenada por descripcion: ";
-				OrdenarPorDescripcion(descripcion,n);
+				ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta);
 			2:
 				Escribir "Lista de articulos ordenada por cantidad vendida: ";
 				//HACER FUNCION
@@ -145,9 +145,44 @@ SubProceso OrdenarPorDescripcion(descripcion,n)
 	FinPara
 FinSubProceso
 
-subproceso  ordenadaPorCantidadVendida
+subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
+	definir i,j,pos_menor,aux como entero;
+	
+	Para i <- 0 Hasta n - 2 Hacer
+		pos_menor <-i;
+				Para j <- i+1 Hasta n - 1 Hacer
+					Si descripcion[j] > descripcion[pos_menor] Entonces
+							// Intercambiar los valores
+							aux = descripcion[j];
+							descripcion[j] = descripcion[j + 1];
+							descripcion[j + 1] = aux;
+							
+							aux = codigoIngresado[j];
+							codigoIngresado[j] = codigoIngresado[j + 1];
+							codigoIngresado[j + 1] = aux;
+							
+							aux = precioVenta[j];
+							precioVenta[j] = precioVenta[j + 1];
+							precioVenta[j + 1] = aux;
+						FinSi
+					FinPara
+		FinPara
+		//		
+			Escribir "Productos ordenados:";
+			Para i = 0 Hasta n-1 Hacer
+				Escribir "Código:", codigoIngresado[i];
+				Escribir "descripcion ",descripcion[i];
+				Escribir "Precio de Venta:", precioVenta[i];
+			FinPara
+			
 	
 FinSubProceso
+
+SubProceso OrdenadaPorCantVendida(Codigo, Descripcion , CantidadTotalvendidames ,ImporteTotalventa) 
+
+
+FinSubProceso
+
 
 
 
