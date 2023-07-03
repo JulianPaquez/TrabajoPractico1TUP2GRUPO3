@@ -10,6 +10,10 @@ Algoritmo TrabajoPracticoIntegrador
 	
 	escribir "Ingresar el numero de articulos";
 	leer n;
+	Mientras n <=0 Hacer
+		escribir "Cantidad incorrecta.Ingrese nuevamente";
+		leer n;
+	FinMientras
 	Dimension articulos[n];
 	Dimension codigoIngresado[n];
 	Dimension PrecioVenta[n];
@@ -54,11 +58,11 @@ Algoritmo TrabajoPracticoIntegrador
 	
 	
 	
-	//Dimension mes[3]; no entra el mes;
+	
 	
 	
 	Para i <- 0 Hasta n-1 Con Paso 1 Hacer
-		//        Para j <- 0 Hasta n-1 Con Paso 1 Hacer
+		
 		escribir "ingrese el codigo del articulo";
 		
 		Repetir
@@ -133,7 +137,7 @@ Algoritmo TrabajoPracticoIntegrador
 		importeTotalVenta[i] = cantidadTotalvendidames[i] * precioVenta[i];
 		contVentasMes = contVentasMes + importeTotalVenta[i];
 		stock[i] = CantExist[i] - (Quincena1[i] + Quincena2[i]);
-		//        FinPara
+		
     FinPara
 	
 	
@@ -228,7 +232,7 @@ subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 		pos_menor <-i;
 				Para j <- i+1 Hasta n - 2 Con Paso 1 Hacer
 					Si descripcion[j] > descripcion[pos_menor] Entonces
-							// Intercambiar los valores
+							
 							aux1 = descripcion[j];
 							descripcion[j] = descripcion[j + 1];
 							descripcion[j + 1] = aux1;
@@ -243,7 +247,7 @@ subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 						FinSi
 					FinPara
 		FinPara
-		//		
+				
 			Escribir "Productos ordenados:";
 			Para i = 0 Hasta n-1 Con Paso 1 Hacer
 				Escribir "Código:", codigoIngresado[i];
@@ -266,14 +270,20 @@ SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotal
 		FinPara
 		
 			
-				// Intercambiar los valores
+		
+		aux <- codigoIngresado[i];
+		codigoIngresado[i] <- codigoIngresado[pos_mayor];
+		codigoIngresado[pos_mayor] <- aux;
+		
+		aux2 <- descripcion[i];
+		descripcion[i] <- descripcion[pos_mayor];
+		descripcion[pos_mayor] <- aux2;
+		
 			  aux <- cantidadTotalvendidames[i];
 		      cantidadTotalvendidames[i] <- cantidadTotalvendidames[pos_mayor];
 		      cantidadTotalvendidames[pos_mayor] <- aux;
 			
-		       aux <- codigoIngresado[i];
-		       codigoIngresado[i] <- codigoIngresado[pos_mayor];
-		       codigoIngresado[pos_mayor] <- aux;
+		       
 			
 		       aux <- importeTotalVenta[i];
 		       importeTotalVenta[i] <- importeTotalVenta[pos_mayor];
@@ -283,9 +293,7 @@ SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotal
 		       precioVenta[i] <- precioVenta[pos_mayor];
 		       precioVenta[pos_mayor] <- aux;
 			   
-			   aux2 <- descripcion[i];
-			   descripcion[i] <- descripcion[pos_mayor];
-		       descripcion[pos_mayor] <- aux2;
+			   
 				
 			
 	FinPara
@@ -326,15 +334,10 @@ SubProceso encontrado <- BuscarArticuloPorCodigo(CodigoIngresado,codigoComp,n,de
             escribir " Descripcion :",descripcion[i];
             escribir " Stock actual: ", stock[i];
             escribir "Cantidad vendida en la quincena 1:  ", Quincena1[i];
-            escribir "Cantidad vendida en la quincena 1:  ", Quincena2[i];
+            escribir "Cantidad vendida en la quincena 2:  ", Quincena2[i];
             
 			
-        SiNo
-			//si codigoComp <> CodigoIngresado[i] entonces
-			encontrado = falso;
-				escribir "No existe artículo con ese código";
-				
-			//FinSi
+			
 			
 		    
         FinSi
@@ -362,8 +365,7 @@ FinSubProceso
 
 
 
-	// recomendacion 3 subprocesos
-	//Una funcion mas que es mostrar estadisticas
+	
 	Subproceso mostrarestadisticasB(sumaQ1Torn,sumaQ2Torn,sumaQ1Adhe,sumaQ2Adhe,sumaQ1Herrajes,sumaQ2Herrajes,sumaQ1Pintura,sumaQ2Pintura,sumaQ1Elec,sumaQ2Elec,TotalQTorn,TotalQAdhe,TotalQHerrajes,TotalQPintura,TotalQElec)
 		
 		definir porcentajeQ1Torn,porcentajeQ2Torn,porcentajeQ1Adhe,porcentajeQ2Adhe,porcentajeQ1Herrajes,porcentajeQ2Herrajes,porcentajeQ1pintura,porcentajeQ2pintura,porcentajeQ1Elec,porcentajeQ2Elec como real;
@@ -403,15 +405,12 @@ FinSubProceso
 		
 		
 FinSubProceso
-	//definir porcentajeTQ1orn,porcentajeTQ2orn...
 	
-//porcentajeTQ1orn = (sumaQ1Torn * 100)/totalQtorn...
-//porcentajeTQ2orn = (sumaQ2Torn * 100)/totalQtorn...
 
 
 SubProceso MostrarEstadisticasC1(sumaQ1Torn,sumaQ1Adhe,sumaQ1Herrajes,sumaQ1Pintura,sumaQ1Elec)
 	definir may ,Val como entero;
-	may = -1;
+	may = 0;
 	Si sumaQ1Torn > may Entonces
 		may = sumaQ1Torn;
 		Val = 1;
@@ -441,7 +440,7 @@ SubProceso MostrarEstadisticasC1(sumaQ1Torn,sumaQ1Adhe,sumaQ1Herrajes,sumaQ1Pint
 		FinSi
 	FinSi
 	
-	Segun val Hacer
+	Segun Val Hacer
 		1:
 			escribir "El rubro con mayor importe total en la quincena 1 es 100- tornillos y tuercas.";
 		2:
@@ -462,7 +461,7 @@ FinSubProceso
 
 SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pintura,sumaQ2Elec)
 	definir may ,Val como entero;
-	may = -1;
+	may = 0;
 	Si sumaQ2Torn > may Entonces
 		may = sumaQ2Torn;
 		Val = 1;
@@ -478,9 +477,11 @@ SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pint
 				Si sumaQ2Pintura> may Entonces
 					may =  sumaQ2Pintura;
 					Val = 4;
+					
 					Si sumaQ2Elec > may Entonces
 						may = sumaQ2Elec;
 						Val = 5;
+						
 					FinSi
 					
 				FinSi
@@ -488,7 +489,7 @@ SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pint
 		FinSi
 	FinSi
 	
-	Segun val Hacer
+	Segun Val Hacer
 		1:
 			escribir "El rubro con mayor importe total en la quincena 2 es 100- tornillos y tuercas.";
 		2:
@@ -496,9 +497,9 @@ SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pint
 		3:
 			escribir "El rubro con mayor importe total en la quincena 2  es 450- Herrajes.Con el importe .";
 		4:
-			escribir "El rubro con mayor importe total en la quincena 2  es 680- Pintura.Con el importe ";
-		5:
-			escribir "El rubro con mayor importe total en la quincena 2  es 720- Electricidad.Con el importe ";
+		escribir "El rubro con mayor importe total en la quincena 2  es 680- Pintura.Con el importe ";
+	5:
+		escribir "El rubro con mayor importe total en la quincena 2  es 720- Electricidad.Con el importe ";
 		De Otro Modo:
 			Escribir "Opcion incorrecta";
 	FinSegun
@@ -507,121 +508,9 @@ SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pint
 FinSubProceso
 
 	
-	//Si sumaQ1Torn > sumaQ1Adhe Entonces
-	//acciones_por_verdaderoSiNo
-		//si...
-	//FinSi
 	
-	//subprocesoC2(sumaQ2Torn,sumaQ2Adhe...)
-    //Si sumaQ1Torn > sumaQ1Adhe Entonces
-	//acciones_por_verdaderoSiNo
-	//si...
-	//FinSi
 
 
-
-//SubProceso MostrarEstadisticas(n, codigoIngresado, descripcion, cantidadTotalvendidames, importeTotalVenta)
-//	definir i,totalrubro, totalRubroQ1, totalRubroQ2,rubro como entero;
-//	definir porcentajeRubro,porcentajeQuincenaQ1,porcentajeQuincenaQ2 como real;
-//	dimension totalrubro[5];
-//	Dimension porcentajeRubro[5];
-//	Dimension totalRubroQ1[5];
-//    Dimension totalRubroQ2[5];
-//	Dimension porcentajeQuincenaQ1[5];
-//    Dimension porcentajeQuincenaQ2[5];
-//	Para i <-0 Hasta n-1 Con Paso 1 Hacer
-//		rubro = codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
-//		
-//		totalrubro[i] = totalrubro[i] + cantidadTotalvendidames[i];
-//	FinPara
-//	
-//	Para i <-0 Hasta 4 Con Paso 1 Hacer
-//		porcentajeRubro[i] = (totalRubro[i] / contVentasMes) *100;
-//		escribir "Porcentaje de artículos vendidos en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeRubro[i], "%";
-//	FinPara
-//	
-//	Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
-//		rubro = codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
-//				
-//		Si i < n/2 entonces
-//	     totalRubroQ1[rubro] <- totalRubroQ1[rubro] + cantidadTotalvendidames[i];
-//		SiNo
-//		totalRubroQ2[rubro] <- totalRubroQ2[rubro] + cantidadTotalvendidames[i];
-//		FinSi
-//	FinPara
-//	
-//	Para i <- 0 Hasta 4 Con Paso 1 Hacer
-//	   porcentajeQuincenaQ1[i] <- (totalRubroQ1[i] / totalVentas) * 100;
-//	   porcentajeQuincenaQ2[i] <- (totalRubroQ2[i] / totalVentas) * 100;
-//	    escribir "Porcentaje de venta de la quincena 1 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ1[i], "%";
-//		escribir "Porcentaje de venta de la quincena 2 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ2[i], "%";
-//	FinPara
-//FinSubProceso
-
-
-
-
-
-
-
-
-
-
-
-
-//SubProceso MostrarEstadisticas(n, codigoIngresado, descripcion, cantidadTotalvendidames, importeTotalVenta)
-//   definir i, rubro, totalVentas, totalRubro, rubroMaxVentasQ1, rubroMaxVentasQ2 como entero;
-//   definir porcentajeRubro, porcentajeQuincenaQ1, porcentajeQuincenaQ2 como real;
-//	
-//   escribir "Mostrando estadísticas...";
-//	
-// Calcular porcentaje de la cantidad de artículos vendidos por rubro
-//    Dimension totalRubro[5];
-//   Dimension porcentajeRubro[5];
-//
-//   Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
-//        rubro <- codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
-//		
-//        totalRubro[rubro] <- totalRubro[rubro] + cantidadTotalvendidames[i];
-//    FinPara
-//	
-//    totalVentas <- sumarElementosArray(cantidadTotalvendidames, n);
-//	Para i <- 0 Hasta 4 Con Paso 1 Hacer
-//       porcentajeRubro[i] <- (totalRubro[i] / totalVentas) * 100;
-//        escribir "Porcentaje de artículos vendidos en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeRubro[i], "%";
-//    FinPara
-//	
-//    // Calcular porcentaje de venta de cada quincena por rubro sobre el total del mes
-//    Dimension totalRubroQ1[5];
-//   Dimension totalRubroQ2[5];
-//   Dimension porcentajeQuincenaQ1[5];
-//   Dimension porcentajeQuincenaQ2[5];
-//	
-//   Para i <- 0 Hasta n - 1 Con Paso 1 Hacer
-//       rubro <- codigoIngresado[i] / 1000; // Obtener los 3 primeros dígitos del código
-//		
-//        Si i < n/2 entonces
-//            totalRubroQ1[rubro] <- totalRubroQ1[rubro] + cantidadTotalvendidames[i];
-//        SiNo
-//            totalRubroQ2[rubro] <- totalRubroQ2[rubro] + cantidadTotalvendidames[i];
-//        FinSi
-//    FinPara
-//	
-//    Para i <- 0 Hasta 4 Con Paso 1 Hacer
-//       porcentajeQuincenaQ1[i] <- (totalRubroQ1[i] / totalVentas) * 100;
-//        porcentajeQuincenaQ2[i] <- (totalRubroQ2[i] / totalVentas) * 100;
-//        escribir "Porcentaje de venta de la quincena 1 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ1[i], "%";
-//       escribir "Porcentaje de venta de la quincena 2 en el rubro", i * 100, "-", (i + 1) * 100, ": ", porcentajeQuincenaQ2[i], "%";
-//    FinPara
-//
-//   // Calcular rubro con el mayor importe total de ventas en cada quincena
-//    rubroMaxVentasQ1 <- obtenerRubroMaxVentas(totalRubroQ1);
-//    rubroMaxVentasQ2 <- obtenerRubroMaxVentas(totalRubroQ2);
-//	
-//    escribir "Rubro con mayor importe total de ventas en la quincena 1: ", rubroMaxVentasQ1;
-//    escribir "Rubro con mayor importe total de ventas en la quincena 2: ", rubroMaxVentasQ2;
-//	
-//FinSubProceso
 
 
 
