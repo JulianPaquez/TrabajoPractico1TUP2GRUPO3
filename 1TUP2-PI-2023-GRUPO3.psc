@@ -1,19 +1,22 @@
 Algoritmo TrabajoPracticoIntegrador
 	
+	// Julian principio : 
 	Definir opciones,codigo,i,mes,rubro,cantidadTotalvendidames,importeTotalVenta,contVentasMes,stock,codigoComp,sumaQ1Torn,sumaQ2Torn,sumaQ1Adhe,sumaQ2Adhe,sumaQ1Herrajes,sumaQ2Herrajes,sumaQ1Pintura,sumaQ2Pintura,sumaQ1Elec,sumaQ2Elec Como Entero;
 	Definir n,articulos,codigoIngresado,CantExist,Quincena1,Quincena2,CantVendidaXMes,contTorn,contAdhe,contHerrajes,contPintura,contElec,TotalQTorn,TotalQAdhe,TotalQHerrajes,TotalQPintura,TotalQElec,rubroIngresado como entero;	
 	definir PrecioVenta,Totalventa Como Real;
 	definir valido,validoRub,encontrado Como Logico;
 	definir descripcion como cadena;
-	
-	contVentasMes =0;
+	// aca definimos las variables
+	contVentasMes =0; // para punto 2 
 	
 	escribir "Ingresar el numero de articulos";
-	leer n;
+	leer n; // aca pusimos cantidad articulo
 	Mientras n <=0 Hacer
 		escribir "Cantidad incorrecta.Ingrese nuevamente";
-		leer n;
+		leer n; // se repite si ponemos menos que 0
 	FinMientras
+	
+	// dimension de articulos
 	Dimension articulos[n];
 	Dimension codigoIngresado[n];
 	Dimension PrecioVenta[n];
@@ -25,12 +28,15 @@ Algoritmo TrabajoPracticoIntegrador
 	dimension importeTotalVenta[n];
 	dimension stock[n];
 	dimension rubro[5];
+	
+	// valores de articulos
 	rubro[0]=100;
 	rubro[1]=300;
 	rubro[2]=450;
 	rubro[3]=680;
 	rubro[4]=720;
 	
+	// contadores y sumas para punto 5
 	contTorn = 0;
 	sumaQ1Torn = 0;
 	sumaQ2Torn = 0;
@@ -60,11 +66,13 @@ Algoritmo TrabajoPracticoIntegrador
 	
 	
 	
+	// carga manual
 	
 	Para i <- 0 Hasta n-1 Con Paso 1 Hacer
 		
 		escribir "ingrese el codigo del articulo";
 		
+		// utilizamos una funcion para el codigo
 		Repetir
 			leer codigoIngresado[i];
 			valido <- ValidarCodigo(codigoIngresado[i]);
@@ -79,36 +87,42 @@ Algoritmo TrabajoPracticoIntegrador
 		Escribir "720 - Electricidad";
 		ValidarRubro(rubro);
 		
-		
+		// ingresamos la descripcion
 		escribir "ingrese la descripcion del articulo";
 		leer descripcion[i];
+		// julian fin
 		
+		//lucas principio
 		
+		// ingresamos el precio de venta
 		escribir "ingrese el precio de venta del articulo";
 		leer PrecioVenta[i];
 		
+		// ingresamos la cantidad existente
 		escribir "ingrese la cantidad existente de los articulos";
 		leer CantExist[i];
 		
+		// ingresamos las quincenas de cada mes
 		escribir "Cantidad de articulos vendidos en la quincena 1";
 		leer Quincena1[i];
 		escribir "Cantidad de articulos vendidos en la quincena 2";
 		leer Quincena2[i];
 		
+		// aca pedimos devuelta el rubro para el punto 5
 		escribir "Por favor ingrese nuevamente el rubro";
 		leer rubroIngresado;
 		Si rubroIngresado = rubro[0] Entonces
 			contTorn = contTorn + 1;
-			sumaQ1Torn = sumaQ1Torn + Quincena1[i];
+			sumaQ1Torn = sumaQ1Torn + Quincena1[i]; // es un acumulador para el punto 5
 			sumaQ2Torn = sumaQ2Torn + Quincena2[i];
-			TotalQTorn = Quincena1[i] + Quincena2[i];
+			TotalQTorn = Quincena1[i] + Quincena2[i]; // total de las quincenas para el punto 5
 			
 			
 		SiNo
 			si rubroIngresado = rubro[1] Entonces
 				contAdhe = contAdhe +1;
 				sumaQ1Adhe = sumaQ1Adhe + Quincena1[i];
-				sumaQ2Torn = sumaQ2Adhe + Quincena2[i];
+				sumaQ2Adhe = sumaQ2Adhe + Quincena2[i];
 				TotalQAdhe = Quincena1[i] + Quincena2[i];
 			SiNo
 				si rubroIngresado = rubro[2] entonces 
@@ -132,16 +146,18 @@ Algoritmo TrabajoPracticoIntegrador
 			FinSi
 		FinSi
 		
-		
-		cantidadTotalvendidames[i] = Quincena1[i] + Quincena2[i];
-		importeTotalVenta[i] = cantidadTotalvendidames[i] * precioVenta[i];
-		contVentasMes = contVentasMes + importeTotalVenta[i];
-		stock[i] = CantExist[i] - (Quincena1[i] + Quincena2[i]);
+		// variables que sirven para los demas puntos.
+		cantidadTotalvendidames[i] = Quincena1[i] + Quincena2[i]; // punto 2
+		importeTotalVenta[i] = cantidadTotalvendidames[i] * precioVenta[i]; // punto 2
+		contVentasMes = contVentasMes + importeTotalVenta[i]; // punto 2 para venta total mes.
+		stock[i] = CantExist[i] - (Quincena1[i] + Quincena2[i]); // punto 3
 		
     FinPara
 	
 	
 	
+	// lucas principio
+	// aca realizamos el menu, donde usamos funciones en cada punto
 	Repetir
 		Escribir "Bienvenido a la ferreteria El Tornillo Loco";
 		Escribir "Ingrese: ";
@@ -186,6 +202,7 @@ Algoritmo TrabajoPracticoIntegrador
 	
 FinAlgoritmo
 
+//funcion para validar si codigo es correcto
 Funcion valido <- ValidarCodigo(codigoIngresado)
 	definir valido Como Logico;
 	
@@ -195,10 +212,11 @@ Funcion valido <- ValidarCodigo(codigoIngresado)
 	SiNo
 		Escribir "Codigo no admitido. Ingresar nuevamente";
 		valido=Falso;
-	FinSi
+	FinSi // julian
 	
 FinFuncion
 
+//julian
 SubProceso ValidarRubro(rubro)
 	definir valido Como Logico;
 	definir contTorn,contAdhe,contHerrajes,contPintura,contElec como entero;
@@ -222,12 +240,13 @@ SubProceso ValidarRubro(rubro)
 	
 FinSubProceso
 
-
-
+// lucas
+// utilizamos un subproceso en donde ordenamos las descripciones por rubros, ya que no sabiamos como hacerlo alfabeticamente
 subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 	definir i,j,pos_menor ,aux como entero;
 	definir aux1 como cadena;
 	
+	// nos guiamos por el codigo de ordenamiento y video
 	Para i <- 0 Hasta n - 2 Con Paso 1 Hacer
 		pos_menor <-i;
 				Para j <- i+1 Hasta n - 2 Con Paso 1 Hacer
@@ -258,8 +277,12 @@ subproceso  ordenadaPorDescripcion(descripcion,n,codigoIngresado,PrecioVenta)
 	
 FinSubProceso
 
+//pedro
+
+// aca utilizamos un subproceso tmb de ordenamiento en donde nos ordena en forma decreciente la cantidad total vendida en el mes
+// el problema q se nos presenta es que las descripciones por algun motivo se cambian
 SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotalvendidames ,ImporteTotalventa,precioVenta,contVentasMes) 
-	definir i,j,pos_mayor,aux como entero;
+	definir i,j,pos_mayor,aux como entero; // definimo las variables
 	definir aux2 como cadena;
 	Para i <- 0 Hasta n - 2 Hacer
 		pos_mayor <-i;
@@ -313,6 +336,11 @@ SubProceso OrdenadaPorCantVendida(CodigoIngresado,n, descripcion , cantidadTotal
 
 FinSubProceso
 
+// Maximo
+
+
+// hacemos subproceso para punto 3.
+// problema : la desripcion se nos cambia.
 SubProceso StockActual ( codigoIngresado,n, descripcion, stock)
 	definir i como entero;
 	Para i <- 0 Hasta n-1 Con Paso 1 Hacer
@@ -323,13 +351,15 @@ SubProceso StockActual ( codigoIngresado,n, descripcion, stock)
 	
 FinSubProceso
 
+// Maximo
+// punto 4
 SubProceso encontrado <- BuscarArticuloPorCodigo(CodigoIngresado,codigoComp,n,descripcion,Quincena1,Quincena2,stock,importeTotalVenta)
     definir i  Como Entero;
 	definir encontrado como logico;
 	
 	encontrado = falso;
     Para i<-0 Hasta n-1 Con Paso 1 Hacer
-        Si codigoComp=CodigoIngresado[i] Entonces
+        Si codigoComp=CodigoIngresado[i] Entonces // codigoComp es para comprobar el codigo
 			encontrado = verdadero;
             escribir " Descripcion :",descripcion[i];
             escribir " Stock actual: ", stock[i];
@@ -344,7 +374,8 @@ SubProceso encontrado <- BuscarArticuloPorCodigo(CodigoIngresado,codigoComp,n,de
     FinPara
 FinFuncion
 
-
+// Todos juntos
+// punto 5 punto A
 SubProceso MostrarEstadisticasA(rubro,contTorn,contAdhe,contHerrajes,contPintura,contElec,n)
 	
 	definir porcentajeTorn,porcentajeAdhe,porcentajeHerrajes,porcentajePintura,porcentajeElec Como Real;
@@ -365,12 +396,12 @@ FinSubProceso
 
 
 
-	
+	// punto 5 Punto B
 	Subproceso mostrarestadisticasB(sumaQ1Torn,sumaQ2Torn,sumaQ1Adhe,sumaQ2Adhe,sumaQ1Herrajes,sumaQ2Herrajes,sumaQ1Pintura,sumaQ2Pintura,sumaQ1Elec,sumaQ2Elec,TotalQTorn,TotalQAdhe,TotalQHerrajes,TotalQPintura,TotalQElec)
 		
 		definir porcentajeQ1Torn,porcentajeQ2Torn,porcentajeQ1Adhe,porcentajeQ2Adhe,porcentajeQ1Herrajes,porcentajeQ2Herrajes,porcentajeQ1pintura,porcentajeQ2pintura,porcentajeQ1Elec,porcentajeQ2Elec como real;
 		
-		porcentajeQ1Torn = (sumaQ1Torn * 100)/TotalQTorn;
+		porcentajeQ1Torn = (sumaQ1Torn * 100)/TotalQTorn;// totalQ1 es la cantidad de articulos que se vendieron en el mes, sumaQ1 es un contador que cuenta las cantidadxes de la quincena 1
 		
 		porcentajeQ2Torn = (sumaQ2Torn * 100)/TotalQTorn;
 		
@@ -407,13 +438,14 @@ FinSubProceso
 FinSubProceso
 	
 
-
+// punto 5 punto c problema no nos funciona bien.
 SubProceso MostrarEstadisticasC1(sumaQ1Torn,sumaQ1Adhe,sumaQ1Herrajes,sumaQ1Pintura,sumaQ1Elec)
 	definir may ,Val como entero;
 	may = 0;
+	// comparamos las sumas de la quincena 1 
 	Si sumaQ1Torn > may Entonces
 		may = sumaQ1Torn;
-		Val = 1;
+		Val = 1; //  val = saber el rubor que es
 	SiNo
 		
 		Si  sumaQ1Adhe > may Entonces
@@ -462,9 +494,10 @@ FinSubProceso
 SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pintura,sumaQ2Elec)
 	definir may ,Val como entero;
 	may = 0;
+	// comparamos las sumas de la quincena 2
 	Si sumaQ2Torn > may Entonces
 		may = sumaQ2Torn;
-		Val = 1;
+		Val = 1; //  val = saber el rubor que es
 		
 		Si  sumaQ2Adhe > may Entonces
 			may = sumaQ2Adhe;
@@ -489,6 +522,7 @@ SubProceso MostrarEstadisticasC2(sumaQ2Torn,sumaQ2Adhe,sumaQ2Herrajes,sumaQ2Pint
 		FinSi
 	FinSi
 	
+	// segun val opciones.
 	Segun Val Hacer
 		1:
 			escribir "El rubro con mayor importe total en la quincena 2 es 100- tornillos y tuercas.";
